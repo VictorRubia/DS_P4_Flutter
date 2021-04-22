@@ -7,13 +7,16 @@
 
 > Sesión 1
 
-- Diseñar diagrama.
+- Diseñar diagrama usando Arquitectura Modelo-Vista-Controlador.
 - Empezar a realizar el código de la app mediante Flutter y Dart.
 
 > Sesión 2
 
 - Terminar de realizar el código y la interfaz de la aplicación.
 
+### Diagrama
+![Diagrama](./assets/svg/diagrama.svg)
+<img src="./assets/svg/diagrama.svg">
 
 ## Licencia
 [![CC0](https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
