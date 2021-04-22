@@ -17,5 +17,16 @@
 ### Diagrama
 ![Diagrama](./assets/svg/diagrama.svg)
 
+### App
+Para la ejecución de la app es necesario añadir el flag siguiente, ya que se usan librerías que no están
+actualizadas.
+```
+--no-sound-null-safety
+```
+
+| INICIO  | PANEL INVERSIONES | SIMULADOR INVERSIONES |
+| ------------- | ------------- | ------------- |
+| ![](./assets/images/inicio.png)  | ![](./assets/images/inversiones.png)  | ![](./assets/images/simulador.png)  |
+
 ## Licencia
 [![CC0](https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
