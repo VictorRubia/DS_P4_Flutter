@@ -24,9 +24,9 @@ actualizadas.
 --no-sound-null-safety
 ```
 
-| INICIO  | PANEL INVERSIONES | 
-| ------------- | ------------- |
-| ![](./assets/images/principal.png)  | ![](./assets/images/inversiones.png) |
+| INICIO  | PANEL INVERSIONES | SIMULADOR INVERSIONES |
+| ------------- | ------------- | ------------- |
+| ![](./assets/images/principal.png)  | ![](./assets/images/inversiones.png)  | ![](./assets/images/simulador.png)  |
 
 ## Licencia
 [![CC0](https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
