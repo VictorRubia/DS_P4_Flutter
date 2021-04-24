@@ -23,7 +23,7 @@ class _pantalla_simularState extends StateMVC {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Widget _buildName() {
+  Widget _campoCantidad() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Cantidad €'),
       keyboardType: TextInputType.number,
@@ -43,7 +43,7 @@ class _pantalla_simularState extends StateMVC {
     );
   }
 
-  Widget _buildEmail() {
+  Widget _campoInteres() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Interés'),
       keyboardType: TextInputType.number,
@@ -60,7 +60,7 @@ class _pantalla_simularState extends StateMVC {
     );
   }
 
-  Widget _buildPassword() {
+  Widget _campoAnios() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Años'),
       keyboardType: TextInputType.number,
@@ -123,9 +123,9 @@ class _pantalla_simularState extends StateMVC {
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: <Widget>[
-                                        _buildName(),
-                                        _buildEmail(),
-                                        _buildPassword(),
+                                        _campoCantidad(),
+                                        _campoInteres(),
+                                        _campoAnios(),
                                         SizedBox(height: 10),
                                         RaisedButton(
                                           child: Text(
@@ -156,7 +156,7 @@ class _pantalla_simularState extends StateMVC {
                               )
                           ],
                         ),
-                        SizedBox(height: 0,),
+                        SizedBox(height: 40,),
                         if(mostrar_chart)
                           Text(
                             'Rentabilidad',style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold),),

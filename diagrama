@@ -185,9 +185,9 @@ class "flutter_app::vista.dart::pantalla_invertir" {
   -String _interes
   -String _anios
   -GlobalKey<FormState> _formKey
-  -Widget _buildName()
-  -Widget _buildEmail()
-  -Widget _buildPassword()
+  -Widget _campoCantidad()
+  -Widget _campoInteres()
+  -Widget _campoAnios()
   +Widget build()
 }
 
@@ -200,9 +200,9 @@ class "flutter_app::vista.dart::pantalla_prestamo" {
   -String _interes
   -String _anios
   -GlobalKey<FormState> _formKey
-  -Widget _buildName()
-  -Widget _buildEmail()
-  -Widget _buildPassword()
+  -Widget _campoCantidad()
+  -Widget _campoInteres()
+  -Widget _campoAnios()
   +Widget build()
 }
 
@@ -221,9 +221,9 @@ class "flutter_app::vista.dart::_pantalla_simularState" {
   -String _interes
   -String _anios
   -GlobalKey<FormState> _formKey
-  -Widget _buildName()
-  -Widget _buildEmail()
-  -Widget _buildPassword()
+  -Widget _campoCantidad()
+  -Widget _campoInteres()
+  -Widget _campoAnios()
   +Widget build()
 }
 

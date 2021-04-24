@@ -14,7 +14,7 @@ class pantalla_invertir extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Widget _buildName() {
+  Widget _campoCantidad() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Cantidad €'),
       keyboardType: TextInputType.number,
@@ -34,7 +34,7 @@ class pantalla_invertir extends StatelessWidget {
     );
   }
 
-  Widget _buildEmail() {
+  Widget _campoInteres() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Interés'),
       keyboardType: TextInputType.number,
@@ -51,7 +51,7 @@ class pantalla_invertir extends StatelessWidget {
     );
   }
 
-  Widget _buildPassword() {
+  Widget _campoAnios() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Años'),
       keyboardType: TextInputType.number,
@@ -98,9 +98,9 @@ class pantalla_invertir extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        _buildName(),
-                        _buildEmail(),
-                        _buildPassword(),
+                        _campoCantidad(),
+                        _campoInteres(),
+                        _campoAnios(),
                         SizedBox(height: 40),
                         Text('NOTA: Hoy el banco cobra una comision del ${Controller.comisionHoy} %'),
                         SizedBox(height: 40),
