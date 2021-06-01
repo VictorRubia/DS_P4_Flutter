@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Pantalla Principal tiene opcion a reiniciar" type="FlutterTestConfigType" factoryName="Flutter Test" nameIsGenerated="true">
+    <option name="testName" value="Pantalla Principal tiene opcion a reiniciar" />
+    <option name="testFile" value="$PROJECT_DIR$/test/widget_test.dart" />
+    <option name="additionalArgs" value="--no-sound-null-safety" />
+    <method v="2" />
+  </configuration>
+</component>

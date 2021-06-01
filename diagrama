@@ -17,15 +17,55 @@ class "flutter_app::constantes::operations.dart::OperationModel" {
   +String unselectedIcon
 }
 
-class "flutter_app::modeloControlador::modeloControlador.dart::Model" {
+class "flutter_app::main.dart::MyHttpOverrides" {
+  +HttpClient createHttpClient()
+}
+
+class "flutter_app::main.dart::MyApp" {
+  +dynamic build()
+}
+
+class "flutter_app::main.dart::MyHomePage" {
+  +int idUsuario
+  +_MyHomePageState createState()
+}
+
+class "flutter_app::main.dart::_MyHomePageState" {
+  +int idUsuario
+  +int current
+  -dynamic _refreshController
+  +List<T> mapa()
+  -void _onRefresh()
+  -void _onLoading()
+  +dynamic build()
+}
+
+class "flutter_app::main.dart::OperationCard" {
+  +String operation
+  +String selectedIcon
+  +String unselectedIcon
+  +bool isSelected
+  +_MyHomePageState context
+  +_OperationCardState createState()
+}
+
+"flutter_app::main.dart::OperationCard" o-- "flutter_app::main.dart::_MyHomePageState"
+
+class "flutter_app::main.dart::_OperationCardState" {
+  +dynamic build()
+}
+
+class "flutter_app::modeloControlador::Controller.dart::Model" {
+  {static} +int idUsuario
   {static} -String _nombre
   {static} -String _apellido
   {static} -double _nomina
   {static} +List<CuentaBancaria> misCuentas
   {static} +List<Prestamo> misPrestamos
   {static} +List<Inversion> misInversiones
-  +List<Series<InversionFutura, String>> seriesList
-  +List<Series<dynamic, dynamic>> chart
+  {static} +List<Tarjeta> misTarjetas
+  {static} +List<Notificaciones> misNotificaciones
+  {static} +List<Movimiento> misMovimientos
   {static} +String detallesSimulador
   {static} +int sectores
   {static} +EstadoBolsa? miEstadoBolsa
@@ -33,72 +73,133 @@ class "flutter_app::modeloControlador::modeloControlador.dart::Model" {
   {static} +String nombre
   {static} +String apellido
   {static} +double nomina
+  {static} +void clear()
   {static} +void addCuenta()
+  {static} +void addTarjeta()
   {static} +void addInversion()
   {static} +void addPrestamo()
+  {static} +void addMovimiento()
   {static} -void _addSaldo()
   {static} -String _getSaldoTotal()
+  {static} -int _getNumNotificaciones()
+  {static} -int _getNumMovimientos()
+  {static} +void addNotificacion()
+  {static} -Notificaciones _getNotificacion()
   {static} +bool compruebaRentabilidad()
   {static} +bool compruebaDeudas()
   {static} -Prestamo _solicitarPrestamo()
   {static} -String _getIBAN()
+  {static} -String _transformarNumTarjeta()
   {static} -int _numCuentas()
+  {static} -int _numTarjetas()
   {static} -int _numPrestamos()
   {static} -int _numInversiones()
   {static} -String _getSaldoCuenta()
+  {static} -String _getNumeroTarjeta()
+  {static} -String _getNumeroTarjetaNeto()
+  {static} -String _getFechaTarjeta()
+  {static} -String _getTipoTarjeta()
+  {static} -String _getCVV()
   {static} -String _getDescripcionInversion()
   {static} -String _getDescripcionPrestamo()
+  {static} -String _getDescripcionMovimiento()
+  {static} -double _getCantidadMovimiento()
   {static} -String _getCantidadInicialInversion()
   {static} -String _getCantidadActualInversion()
   {static} -String _getCuotasInversion()
   {static} -String _getCuotasPrestamo()
   {static} -String _getCantidadPrestamo()
-  {static} +void resetPanel()
-  {static} +void simuladorInversion()
   {static} -bool _tieneSaldo()
   {static} +List<InversionFutura> simular_inversion()
-  {static} -List<Series<InversionFutura, String>> _crearDatos()
+  {static} -List<dynamic> _crearDatos()
   {static} +void simularEstadoBolsa()
 }
 
-"flutter_app::modeloControlador::modeloControlador.dart::Model" o-- "flutter_app::constantes::estadoBolsa.dart::EstadoBolsa?"
+"flutter_app::modeloControlador::Controller.dart::Model" o-- "flutter_app::constantes::estadoBolsa.dart::EstadoBolsa"
 
-class "flutter_app::modeloControlador::modeloControlador.dart::Controller" {
+class "flutter_app::modeloControlador::Controller.dart::Controller" {
+  {static} -Controller _instance
+  {static} +int touchedIndex
+  {static} +Map<String, dynamic> respuesta
+  {static} -String _baseAddress
+  {static} -String _applicationName
   {static} +String nombre
   {static} +String apellidos
   {static} +int sectores
+  {static} +int idUsuario
   {static} +String detallesSimulador
   {static} +EstadoBolsa? miEstadoBolsa
   {static} +int? comisionHoy
   {static} +String getIBANCuenta()
   {static} +int numCuentas()
+  {static} +int numTarjetas()
   {static} +int numPrestamos()
   {static} +int numInversiones()
+  {static} +String getIdCuenta()
   {static} +String getDescripcionInversion()
   {static} +String getDescripcionPrestamo()
+  {static} +String getDescripcionMovimiento()
+  {static} +double getCantidadMovimiento()
   {static} +String getCantidadInicialInversion()
   {static} +String getCantidadActualInversion()
   {static} +String getCuotasPrestamo()
   {static} +String getCantidadPrestamo()
   {static} +String getSaldoCuenta()
+  {static} +String getNumeroTarjeta()
+  {static} +String getNumeroTarjetaNeto()
+  {static} +String getFechaTarjeta()
+  {static} +String getTipoTarjeta()
+  {static} +String getCVV()
   {static} +String getSaldoTotal()
+  {static} +int getNumNotificaciones()
+  {static} +int getNumMovimientos()
+  {static} +Notificaciones getNotificacion()
   {static} +bool tieneSaldo()
-  {static} +void reiniciarPanel()
-  {static} +List<Series<InversionFutura, String>> crearDatos()
+  {static} +List<dynamic> crearDatos()
   {static} +void addSaldo()
+  {static} +Future<Map<String, dynamic>> getDatos()
+  {static} +Future<List<Prestamo>> getPrestamos()
+  {static} +Future<List<Notificaciones>> getNotificaciones()
+  {static} +Future<List<Inversion>> getInversiones()
+  {static} +void deletePrestamo()
+  {static} +void deleteInversion()
+  {static} +Future<bool> deleteNotificaciones()
+  {static} +Future<bool> actualizarSaldo()
+  {static} +Future<bool> actualizarSaldoTransferencia()
+  {static} +Future<bool> crearMovimiento()
+  {static} +Future<bool> crearMovimientoTransferencia()
+  {static} +Future<Map<String, dynamic>> crearPrestamo()
+  {static} +Future<Map<String, dynamic>> crearInversion()
+  {static} +Future<bool> crearSolicitudPrestamo()
+  {static} +Future<bool> crearSolicitudTarjeta()
+  {static} +Future<bool> crearTransferencia()
+  {static} +void pagarPrestamo()
+  {static} +void resolverInversion()
+  {static} +void limpiarSesion()
+  {static} +void actualizar()
+  {static} +bool realizarTransferencia()
+  {static} +bool solicitarTarjeta()
+  {static} +bool cancelarTarjeta()
+  {static} +Future<bool> borrarNotificaciones()
+  {static} +bool tieneNotificacionesSinBorrar()
+  {static} +void compruebaFechas()
+  {static} +Prestamo solicitarPrestamoModelo()
+  {static} +Controller getInstance()
   {static} +void inicializarPanel()
   {static} +void solicitarPrestamo()
   {static} +dynamic showAlertDialogPrestamos()
   {static} +double calculoInversionFinal()
-  {static} +void realizarInversion()
+  {static} +Future<bool> realizarInversion()
   {static} +dynamic showAlertDialogInversiones()
-  {static} +Widget generarGraficoBarras()
+  {static} +dynamic datosBarra()
+  {static} +List<dynamic> datosSecciones()
+  {static} +dynamic getEstadoBolsa()
 }
 
-"flutter_app::modeloControlador::modeloControlador.dart::Controller" o-- "flutter_app::constantes::estadoBolsa.dart::EstadoBolsa?"
-"mvc_pattern::mvc_pattern.dart::ControllerMVC" <|-- "flutter_app::modeloControlador::modeloControlador.dart::Controller"
+"flutter_app::modeloControlador::Controller.dart::Controller" o-- "flutter_app::modeloControlador::Controller.dart::Controller"
+"flutter_app::modeloControlador::Controller.dart::Controller" o-- "flutter_app::constantes::estadoBolsa.dart::EstadoBolsa"
 
-class "flutter_app::modeloControlador::modeloControlador.dart::CuentaBancaria" {
+class "flutter_app::modeloControlador::CuentaBancaria.dart::CuentaBancaria" {
   +String IBAN
   +double saldo
   +void setIBAN()
@@ -106,7 +207,8 @@ class "flutter_app::modeloControlador::modeloControlador.dart::CuentaBancaria" {
   +void aniadirSaldo()
 }
 
-class "flutter_app::modeloControlador::modeloControlador.dart::Inversion" {
+class "flutter_app::modeloControlador::Inversion.dart::Inversion" {
+  +int id
   +double cantidad_actual
   +double cantidad_inicial
   +double interes
@@ -114,12 +216,27 @@ class "flutter_app::modeloControlador::modeloControlador.dart::Inversion" {
   +String descripcion
 }
 
-class "flutter_app::modeloControlador::modeloControlador.dart::InversionFutura" {
+class "flutter_app::modeloControlador::InversionFutura.dart::InversionFutura" {
   +String cuotas
   +double cantidad
 }
 
-class "flutter_app::modeloControlador::modeloControlador.dart::Prestamo" {
+class "flutter_app::modeloControlador::Movimiento.dart::Movimiento" {
+  +int id
+  +double cantidad
+  +int idCuenta
+  +String concepto
+}
+
+class "flutter_app::modeloControlador::Notificaciones.dart::Notificaciones" {
+  +int id
+  +int idObjetivo
+  +int tipo
+  +int resuelto
+}
+
+class "flutter_app::modeloControlador::Prestamo.dart::Prestamo" {
+  +int id
   +double cantidad
   +int cuotas
   +double interes
@@ -127,108 +244,147 @@ class "flutter_app::modeloControlador::modeloControlador.dart::Prestamo" {
   +void addCuotas()
 }
 
-class "flutter_app::vista.dart::MyApp" {
-  +Widget build()
+class "flutter_app::modeloControlador::Tarjeta.dart::Tarjeta" {
+  +String num_tarjeta
+  +String fecha_caducidad
+  +String cvv
+  +String tipo
+  +void setNum()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "flutter_app::vista.dart::MyApp"
-
-class "flutter_app::vista.dart::MyHomePage" {
-  +_MyHomePageState createState()
+class "flutter_app::vistas::detalleTarjeta.dart::detalleTarjeta" {
+  +int indice
+  +_detalleTarjetaState createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "flutter_app::vista.dart::MyHomePage"
-
-class "flutter_app::vista.dart::_MyHomePageState" {
-  +int current
-  +List<T> mapa()
-  +Widget build()
+class "flutter_app::vistas::detalleTarjeta.dart::_detalleTarjetaState" {
+  +int indice
+  +dynamic build()
+  -dynamic _buildDivider()
 }
 
-"mvc_pattern::mvc_pattern.dart::StateMVC" <|-- "flutter_app::vista.dart::_MyHomePageState"
-
-class "flutter_app::vista.dart::OperationBank" {
-  +String operation
-  +String selectedIcon
-  +String unselectedIcon
-  +bool isSelected
-  +_MyHomePageState context
-  +_OperationBankState createState()
+class "flutter_app::vistas::login.dart::login" {
+  {static} +int idUsuario
+  {static} -String _baseAddress
+  {static} -String _applicationName
+  +Duration loginTime
+  {static} +Future<String> getPasswd()
+  {static} +Future<int> getId()
+  -Future<String> _authUser()
+  -Future<String> _recoverPassword()
+  +dynamic build()
 }
 
-"flutter_app::vista.dart::OperationBank" o-- "flutter_app::vista.dart::_MyHomePageState"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "flutter_app::vista.dart::OperationBank"
-
-class "flutter_app::vista.dart::_OperationBankState" {
-  +Widget build()
+class "flutter_app::vistas::pagarPrestamo.dart::pantalla_pagar_prestamo" {
+  {static} +String path
+  +_pantalla_pagar_prestamoState createState()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "flutter_app::vista.dart::_OperationBankState"
-
-class "flutter_app::vista.dart::DonutPieChart" {
-  +List<Series<dynamic, dynamic>> seriesList
-  +bool animate
-  +Widget build()
-  {static} -List<Series<TDAInversion, String>> _createData()
+class "flutter_app::vistas::pagarPrestamo.dart::_pantalla_pagar_prestamoState" {
+  +dynamic build()
+  -dynamic _buildDivider()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "flutter_app::vista.dart::DonutPieChart"
-
-class "flutter_app::vista.dart::TDAInversion" {
-  +String year
-  +int sales
-}
-
-class "flutter_app::vista.dart::pantalla_invertir" {
+class "flutter_app::vistas::pantalla_invertir.dart::pantalla_invertir" {
   -String _input
   -String _cantidad
   -String _interes
   -String _anios
-  -GlobalKey<FormState> _formKey
-  -Widget _campoCantidad()
-  -Widget _campoInteres()
-  -Widget _campoAnios()
-  +Widget build()
+  -String _concepto
+  -dynamic _formKey
+  -dynamic _campoCantidad()
+  -dynamic _campoInteres()
+  -dynamic _campoAnios()
+  -dynamic _campoConcepto()
+  +dynamic build()
 }
 
-"flutter_app::vista.dart::pantalla_invertir" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "flutter_app::vista.dart::pantalla_invertir"
+class "flutter_app::vistas::pantalla_movimientos.dart::pantalla_movimientos" {
+  {static} +String path
+  +_pantalla_movimientosState createState()
+}
 
-class "flutter_app::vista.dart::pantalla_prestamo" {
-  -String _input
+class "flutter_app::vistas::pantalla_movimientos.dart::_pantalla_movimientosState" {
+  -dynamic _refreshController
+  -void _onRefresh()
+  -void _onLoading()
+  +dynamic build()
+}
+
+class "flutter_app::vistas::pantalla_prestamo.dart::pantalla_prestamo" {
   -String _cantidad
   -String _interes
   -String _anios
-  -GlobalKey<FormState> _formKey
-  -Widget _campoCantidad()
-  -Widget _campoInteres()
-  -Widget _campoAnios()
-  +Widget build()
+  -String _concepto
+  +Future<List<Prestamo>> prestamos
+  -dynamic _formKey
+  -dynamic _campoCantidad()
+  -dynamic _campoInteres()
+  -dynamic _campoAnios()
+  -dynamic _campoConcepto()
+  +dynamic build()
+  -dynamic _buildDivider()
 }
 
-"flutter_app::vista.dart::pantalla_prestamo" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "flutter_app::vista.dart::pantalla_prestamo"
-
-class "flutter_app::vista.dart::pantalla_simular" {
+class "flutter_app::vistas::pantalla_simular.dart::pantalla_simular" {
   +_pantalla_simularState createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "flutter_app::vista.dart::pantalla_simular"
-
-class "flutter_app::vista.dart::_pantalla_simularState" {
+class "flutter_app::vistas::pantalla_simular.dart::_pantalla_simularState" {
   +bool mostrar_chart
   -String _inversion
   -String _interes
   -String _anios
-  -GlobalKey<FormState> _formKey
-  -Widget _campoCantidad()
-  -Widget _campoInteres()
-  -Widget _campoAnios()
-  +Widget build()
+  -dynamic _formKey
+  -dynamic _campoCantidad()
+  -dynamic _campoInteres()
+  -dynamic _campoAnios()
+  +dynamic build()
 }
 
-"flutter_app::vista.dart::_pantalla_simularState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
-"mvc_pattern::mvc_pattern.dart::StateMVC" <|-- "flutter_app::vista.dart::_pantalla_simularState"
+class "flutter_app::vistas::pantalla_solicitar_tarjetas.dart::pantalla_solicitar_tarjetas" {
+  -String _cantidad
+  -String _idCuenta
+  -String _concepto
+  +Future<List<Prestamo>> prestamos
+  -dynamic _formKey
+  -dynamic _campoCuenta()
+  -dynamic _campoCantidad()
+  -dynamic _campoConcepto()
+  +dynamic build()
+  -dynamic _buildDivider()
+}
+
+class "flutter_app::vistas::perfil.dart::perfil" {
+  +_perfilState createState()
+}
+
+class "flutter_app::vistas::perfil.dart::_perfilState" {
+  +dynamic build()
+  -dynamic _buildDivider()
+}
+
+class "flutter_app::vistas::realizarTransferencia.dart::pantalla_transferencias" {
+  -String _cantidad
+  -String _idCuenta
+  -String _concepto
+  -dynamic _formKey
+  -dynamic _campoCuenta()
+  -dynamic _campoCantidad()
+  -dynamic _campoConcepto()
+  +dynamic build()
+  -dynamic _buildDivider()
+}
+
+class "flutter_app::vistas::resolverInversion.dart::pantalla_resolver_inversion" {
+  {static} +String path
+  +_pantalla_resolver_inversionState createState()
+}
+
+class "flutter_app::vistas::resolverInversion.dart::_pantalla_resolver_inversionState" {
+  +dynamic build()
+  -dynamic _buildDivider()
+}
 
 
 @enduml

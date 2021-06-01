@@ -7,24 +7,45 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/main.dart';
+import 'package:flutter_app/vistas/pantalla_invertir.dart';
+import 'package:flutter_app/vistas/pantalla_simular.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Aplicación tiene las opciones principales', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    //  Verificar que nuestro saldo comienza en 3500 €
+    final titleFinder = find.text('3500,00 €');
+    final simuladorFinder = find.text('Simular\nInversión');
+    final inversionesFinder = find.text('Invertir');
+    final prestamoFinder = find.text('Pedir\nPréstamo');
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Verificar las distintas opciones de los menús
+    expect(titleFinder, findsOneWidget);
+    expect(inversionesFinder, findsWidgets);
+    expect(simuladorFinder, findsWidgets);
+    expect(prestamoFinder, findsWidgets);
+
+  });
+  testWidgets('Rellenar campos obligatorios - Pantalla Simular', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(pantalla_simular());
+
+    await tester.tap(find.byType(RaisedButton));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Campo obligatorio'), findsWidgets);
+  });
+  testWidgets('Pantalla Principal tiene opcion a reiniciar', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(MyApp());
+
+    await tester.tapAt(const Offset(942.0, 332.0));
+    await tester.pump();
+
+    expect(find.byType(InkWell, skipOffstage: true), findsWidgets);
   });
 }

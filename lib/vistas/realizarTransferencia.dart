@@ -1,20 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/modeloControlador/Prestamo.dart';
-import 'package:flutter_app/vistas/pagarPrestamo.dart';
 import 'package:flutter_app/modeloControlador/Controller.dart';
 
-class pantalla_prestamo extends StatelessWidget {
+class pantalla_transferencias extends StatelessWidget {
   late String _cantidad;
-  late String _interes;
-  late String _anios;
+  late String _idCuenta;
   late String _concepto;
 
-  Future<List<Prestamo>> prestamos = Controller.getPrestamos(Controller.idUsuario.toString());
-
-  pantalla_prestamo({Key? key}) : super(key: key);
+  pantalla_transferencias({Key? key}) : super(key: key);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  Widget _campoCuenta() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Nº de Cuenta Destino'),
+      keyboardType: TextInputType.number,
+      validator: (_input) {
+        if (_input!.isEmpty) {
+          return 'Campo obligatorio';
+        }
+        if(_input == (Controller.idUsuario.toString())){
+          return 'No puede hacerse una transferencia a sí mismo';
+        }
+
+        return null;
+      },
+      onSaved: (_input) {
+        _idCuenta = _input!;
+      },
+    );
+  }
 
   Widget _campoCantidad() {
     return TextFormField(
@@ -24,48 +39,14 @@ class pantalla_prestamo extends StatelessWidget {
         if (_input!.isEmpty) {
           return 'Campo obligatorio';
         }
-
-        if(double.parse(_input) > 500000)
-          return 'Para pedir cantidades tan altas acuda al banco!';
+        if(_input.contains('-')){
+          return 'No puede introducir valores negativos!';
+        }
 
         return null;
       },
       onSaved: (_input) {
         _cantidad = _input!;
-      },
-    );
-  }
-
-  Widget _campoInteres() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Interés'),
-      keyboardType: TextInputType.number,
-      validator: (_input) {
-        if (_input!.isEmpty) {
-          return 'Campo obligatorio';
-        }
-
-        return null;
-      },
-      onSaved: (_input) {
-        _interes = _input!;
-      },
-    );
-  }
-
-  Widget _campoAnios() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Años'),
-      keyboardType: TextInputType.number,
-      validator: (_input) {
-        if (_input!.isEmpty) {
-          return 'Campo obligatorio';
-        }
-
-        return null;
-      },
-      onSaved: (_input) {
-        _anios = _input!;
       },
     );
   }
@@ -91,7 +72,7 @@ class pantalla_prestamo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(title: Text("Área de Préstamos")),
+      appBar: AppBar(title: Text("Realizar Transferencia")),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -100,40 +81,9 @@ class pantalla_prestamo extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Card(
-                  elevation: 8.0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  color: Colors.indigo,
-                  child: ListTile(
-                    onTap: () {
-                      //open pagar prestamo
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>
-                              pantalla_pagar_prestamo()));
-                    },
-                    title: Text(
-                      'Pagar un préstamo',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    leading: Icon(
-                      Icons.euro,
-                      color: Colors.white,
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30.0),
+                const SizedBox(height: 15.0),
                 Text(
-                  "Solicitar un préstamo",
+                  "Introduzca los siguientes datos",
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -147,15 +97,14 @@ class pantalla_prestamo extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        _campoCuenta(),
                         _campoCantidad(),
-                        _campoInteres(),
-                        _campoAnios(),
                         _campoConcepto(),
                         //_buildAlertDialog(context),
                         SizedBox(height: 30),
                         ElevatedButton(
                           child: Text(
-                            'Mandar solicitud',
+                            'Realizar Transferencia',
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                           onPressed: () async{
@@ -164,8 +113,13 @@ class pantalla_prestamo extends StatelessWidget {
                             }
                             _formKey.currentState!.save();
 
-                            Controller.solicitarPrestamo(_cantidad, _anios, _interes, _concepto, context);
+                            Controller.realizarTransferencia(_idCuenta, _cantidad, _concepto);
                             Controller.actualizar();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: const Text('Transferencia realizada!'),
+                              ),
+                            );
                           },
                         )
                       ],

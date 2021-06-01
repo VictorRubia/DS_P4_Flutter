@@ -1,10 +1,9 @@
-import 'dart:math';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:flutter_app/modeloControlador/Controller.dart';
-import 'donut.dart';
 
 class pantalla_simular extends StatefulWidget {
   //requiring the list of todos
@@ -31,9 +30,6 @@ class _pantalla_simularState extends StateMVC {
         if (value!.isEmpty) {
           return 'Campo obligatorio';
         }
-        // if (!Controller.tieneSaldo(double.parse(value))){
-        //   return 'No tiene dinero suficiente';
-        // }
 
         return null;
       },
@@ -90,7 +86,7 @@ class _pantalla_simularState extends StateMVC {
               icon: Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            backgroundColor: Color(0xff1976d2),
+            backgroundColor: Colors.indigo,
             //backgroundColor: Color(0xff308e1c),
             title: Text('Simulación'),
             centerTitle: true,
@@ -107,7 +103,7 @@ class _pantalla_simularState extends StateMVC {
           body: TabBarView(
             children: [
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(0.5),
                 child: Container(
                   child: Center(
                     child: Column(
@@ -117,7 +113,7 @@ class _pantalla_simularState extends StateMVC {
                             new Flexible(
                               //margin: EdgeInsets.only(left: 16, right: 16, top: 10),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 16, right: 10, top: 16),
+                                  padding: const EdgeInsets.only(left: 16, right: 10, top: 0),
                                   child: new Form(
                                     key: _formKey,
                                     child: Column(
@@ -127,10 +123,13 @@ class _pantalla_simularState extends StateMVC {
                                         _campoInteres(),
                                         _campoAnios(),
                                         SizedBox(height: 10),
-                                        RaisedButton(
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.indigo,
+                                          ),
                                           child: Text(
                                             'Simular',
-                                            style: TextStyle(color: Colors.blue, fontSize: 16),
+                                            style: TextStyle(color: Colors.white, fontSize: 16),
                                           ),
                                           onPressed: () {
                                             if (!_formKey.currentState!.validate()) {
@@ -152,24 +151,54 @@ class _pantalla_simularState extends StateMVC {
                                 width: 250,
                                 height:150,
                                 margin: EdgeInsets.only(left: 0, right: 0, top: 10),
-                                child: DonutPieChart.factory(int.parse(_inversion), Controller.sectores),
+                                child: PieChart(
+                                  PieChartData(
+                                      pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
+                                        setState(() {
+                                          final desiredTouch = pieTouchResponse.touchInput is! PointerExitEvent &&
+                                              pieTouchResponse.touchInput is! PointerUpEvent;
+                                          if (desiredTouch && pieTouchResponse.touchedSection != null) {
+                                            Controller.touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                                          } else {
+                                            Controller.touchedIndex = -1;
+                                          }
+                                        });
+                                      }),
+                                      borderData: FlBorderData(
+                                        show: false,
+                                      ),
+                                      sectionsSpace: 0,
+                                      centerSpaceRadius: 40,
+                                      sections: Controller.datosSecciones(_inversion, _interes, _anios)),
+                                  swapAnimationDuration: Duration(milliseconds: 150), // Optional
+                                  swapAnimationCurve: Curves.linear, // Optional
+                                ),
+                                //DonutPieChart.factory(int.parse(_inversion), Controller.sectores),
                               )
                           ],
                         ),
-                        SizedBox(height: 40,),
+                        SizedBox(height: 30,),
                         if(mostrar_chart)
                           Text(
-                            'Rentabilidad',style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.bold),),
+                            'Rentabilidad',style: TextStyle(fontSize: 17.0,fontWeight: FontWeight.bold),),
+                        SizedBox(height: 10,),
                         if(mostrar_chart)
-                          Expanded(
-                            child: charts.BarChart(
-                              Controller.crearDatos(_inversion, _interes, _anios),
-                              animate: true,
-                              barGroupingType: charts.BarGroupingType.grouped,
-                              //behaviors: [new charts.SeriesLegend()],
-                              animationDuration: Duration(milliseconds: 500),
-                              barRendererDecorator: new charts.BarLabelDecorator<String>(),
-                              domainAxis: new charts.OrdinalAxisSpec(),
+                          AspectRatio(
+                            aspectRatio: 1.25,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(9),
+                                  ),
+                                  color: Color(0xff232d37)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 18.0, left: 12.0, top: 24, bottom: 12),
+                                child: LineChart(
+                                  Controller.datosBarra(_inversion, _interes, _anios),
+                                  swapAnimationDuration: Duration(milliseconds: 150), // Optional
+                                  swapAnimationCurve: Curves.linear, // Optional
+                                ),
+                              ),
                             ),
                           ),
                       ],

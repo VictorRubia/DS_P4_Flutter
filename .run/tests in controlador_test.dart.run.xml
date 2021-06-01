@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="tests in controlador_test.dart" type="FlutterTestConfigType" factoryName="Flutter Test" nameIsGenerated="true">
+    <option name="testFile" value="$PROJECT_DIR$/test/controlador_test.dart" />
+    <option name="additionalArgs" value="--no-sound-null-safety" />
+    <method v="2" />
+  </configuration>
+</component>

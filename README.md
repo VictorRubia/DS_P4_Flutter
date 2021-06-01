@@ -3,30 +3,37 @@
 # Desarrollo del Software
 > Asignatura 3º de Grado en Ingeniería Informática de la especialidad en Software.
 
-## Práctica 2 : Reingeniería software con *código heredado (legacy code)*
+## Práctica 4 : Desarrollo de una aplicación *multiplataforma*
 
-> Sesión 1
+> Sesión 1 y 2
 
-- Diseñar diagrama usando Arquitectura Modelo-Vista-Controlador.
-- Empezar a realizar el código de la app mediante Flutter y Dart.
+- Diagrama de casos de uso
+- Listado somero departes interesadas y preocupaciones de cada una
+- Requisitos funcionales
+- Requisitos no funcionales
+- Diagrama que muestre la arquitectura del sistema desde el punto de vista del contexto
+- Diagrama de base de datos
+- Listado de criterios de calidad
+- Diseño de pruebas del sistema e integración: condiciones de prueba y casos de prueba
+- Diseño de pruebas de unidad, con casos y condiciones de prueba 
+- Diagrama de clases de diseño
 
-> Sesión 2
+> Sesión 3 y 4
 
-- Terminar de realizar el código y la interfaz de la aplicación.
+- Generar el código de la API
+- Generar código de la aplicación Flutter
 
 ### Diagrama
 ![Diagrama](./assets/svg/diagrama.svg)
 
 ### App
-Para la ejecución de la app es necesario añadir el flag siguiente, ya que se usan librerías que no están
-actualizadas.
-```
---no-sound-null-safety
-```
 
-| INICIO  | PANEL INVERSIONES | SIMULADOR INVERSIONES |
+| LOGIN  | INICIO | PERFIL |
 | ------------- | ------------- | ------------- |
-| ![](./assets/images/principal.png)  | ![](./assets/images/inversiones.png)  | ![](./assets/images/simulador.png)  |
+| ![](./assets/images/screenshots/login.png)  | ![](./assets/images/screenshots/posicionglobal.png)  | ![](./assets/images/screenshots/perfil.png)  |
+| VER DETALLES TARJETA  | SIMULADOR INVERSIÓN | PANEL PRESTAMOS |
+| ------------- | ------------- | ------------- |
+| ![](./assets/images/screenshots/vertarjeta.png)  | ![](./assets/images/screenshots/posicionglobal.png)  | ![](./assets/images/screenshots/prestamos.png)  |
 
 ## Licencia
 [![CC0](https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
