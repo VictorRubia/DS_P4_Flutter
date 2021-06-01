@@ -31,6 +31,7 @@
 | LOGIN  | INICIO | PERFIL |
 | ------------- | ------------- | ------------- |
 | ![](./assets/images/screenshots/login.png)  | ![](./assets/images/screenshots/posicionglobal.png)  | ![](./assets/images/screenshots/perfil.png)  |
+
 | VER DETALLES TARJETA  | SIMULADOR INVERSIÓN | PANEL PRESTAMOS |
 | ------------- | ------------- | ------------- |
 | ![](./assets/images/screenshots/vertarjeta.png)  | ![](./assets/images/screenshots/posicionglobal.png)  | ![](./assets/images/screenshots/prestamos.png)  |
