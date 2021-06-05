@@ -667,8 +667,22 @@ class Controller extends ControllerMVC {
   }
 
   /////////// update /////////
-  static Future<bool> actualizarSaldoTransferencia(
-      String nueva, String idUsuarioDestino) async {
+  static Future<bool> actualizarSaldoTransferencia(String nueva, String idUsuarioDestino) async {
+    late var amount;
+    final response2 = await http.get(
+        Uri.https(_baseAddress, _applicationName + 'accounts/' + idUsuarioDestino),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        });
+
+    if (response2.statusCode == 200) {
+      Map<String, dynamic> jsonn =
+      json.decode(response2.body) as Map<String, dynamic>;
+      amount = jsonn['amount'];
+    }
+
+    var convertido = (double.parse(nueva) + double.parse(amount)).toString();
+
     final http.Response response = await http.put(
       Uri.https(
           _baseAddress, _applicationName + 'accounts/' + idUsuarioDestino),
@@ -676,12 +690,11 @@ class Controller extends ControllerMVC {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'amount': nueva,
+        'amount': convertido,
       }),
     );
     print(response.statusCode);
     if (response.statusCode == 200) {
-      print("CAMBIO EL SALDO");
       return true;
     } else
       throw Exception('ERROR');
@@ -806,7 +819,7 @@ class Controller extends ControllerMVC {
       body: jsonEncode(<String, String>{
         'id_objetivo': 0.toString(),
         'account_id': idUsuario.toString(),
-        'tipo': 2.toString(),
+        'tipo': 0.toString(),
         'solved': 0.toString(),
       }),
     );
@@ -866,19 +879,12 @@ class Controller extends ControllerMVC {
     Model.nombre = '';
   }
 
-  static bool realizarTransferencia(
-      String idCuentaDestino, String cantidad, String concepto) {
+  static bool realizarTransferencia( String idCuentaDestino, String cantidad, String concepto) {
     crearTransferencia(cantidad, idCuentaDestino, concepto);
-    actualizarSaldo(
-        (double.parse(getSaldoCuenta(0)) - double.parse(cantidad)).toString());
-    actualizarSaldoTransferencia(
-        (double.parse(getSaldoCuenta(0)) + double.parse(cantidad)).toString(),
-        idCuentaDestino);
-    crearMovimiento(
-        new Movimiento(-1, -(double.parse(cantidad)), -1, 'Transferencia'));
-    crearMovimientoTransferencia(
-        new Movimiento(-1, (double.parse(cantidad)), -1, 'Transf. a favor'),
-        idCuentaDestino);
+    actualizarSaldo((double.parse(getSaldoCuenta(0)) - double.parse(cantidad)).toString());
+    actualizarSaldoTransferencia(double.parse(cantidad).toString(), idCuentaDestino);
+    crearMovimiento(new Movimiento(-1, -(double.parse(cantidad)), -1, 'Transferencia'));
+    crearMovimientoTransferencia( new Movimiento(-1, (double.parse(cantidad)), -1, 'Transf. a favor'), idCuentaDestino);
     return true;
   }
 
@@ -887,15 +893,9 @@ class Controller extends ControllerMVC {
     return true;
   }
 
-  static bool cancelarTarjeta() {
-    crearSolicitudTarjeta();
-    return true;
-  }
-
   static Future<bool> borrarNotificaciones() async {
     for (int i = 0; i < Model.misNotificaciones.length; i++) {
-      if (Model.misNotificaciones[i].resuelto == 1 ||
-          Model.misNotificaciones[i].resuelto == -1) {
+      if (Model.misNotificaciones[i].resuelto == 1 || Model.misNotificaciones[i].resuelto == -1) {
         await deleteNotificaciones(Model.misNotificaciones[i].id.toString());
         Model.misNotificaciones.removeAt(i);
       }
@@ -913,8 +913,6 @@ class Controller extends ControllerMVC {
     }
     return tiene;
   }
-
-  static void compruebaFechas() {}
 
   /* ------------------------------------ */
   /*
@@ -934,8 +932,7 @@ class Controller extends ControllerMVC {
 
   static void inicializarPanel() {
     if (Model._numCuentas() == 0 && numTarjetas() == 0) {
-      //Model.addCuenta(new CuentaBancaria('ES1130043519529674859919', 3500.00));
-      //Model.addTarjeta(new Tarjeta('4388 7376 7567 5277','04/29','459'));
+      Model.clear();
       Model.simularEstadoBolsa();
     }
   }
@@ -1043,14 +1040,11 @@ class Controller extends ControllerMVC {
     return res;
   }
 
-  static Future<bool> realizarInversion(String cantidad, String cuotas,
-      String interes, String concepto, BuildContext context) async {
+  static Future<bool> realizarInversion(String cantidad, String cuotas, String interes, String concepto, BuildContext context) async {
     Inversion inv;
     String resultado = '';
-    inv = new Inversion(-1, double.parse(cantidad), double.parse(cantidad),
-        double.parse(interes), int.parse(cuotas), concepto);
-    resultado +=
-        'El banco se quedará con ${(inv.cantidad_inicial * (comisionHoy! / 100)).toStringAsFixed(2)} € y como la bolsa está ${miEstadoBolsa.toString().split('.').last} finalmente obtendrá ${calculoInversionFinal(cantidad)} €';
+    inv = new Inversion(-1, double.parse(cantidad), double.parse(cantidad), double.parse(interes), int.parse(cuotas), concepto);
+    resultado += 'El banco se quedará con ${(inv.cantidad_inicial * (comisionHoy! / 100)).toStringAsFixed(2)} € y como la bolsa está ${miEstadoBolsa.toString().split('.').last} finalmente obtendrá ${calculoInversionFinal(cantidad)} €';
     inv.cantidad_inicial = double.parse(cantidad);
     inv.cantidad_actual = calculoInversionFinal(cantidad);
     await showAlertDialogInversiones(context, resultado, inv);
@@ -1081,7 +1075,7 @@ class Controller extends ControllerMVC {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Solicitando el prestamo....'),
+            content: const Text('Inversion realizada!'),
           ),
         );
       },

@@ -245,7 +245,7 @@ class _perfilState extends StateMVC {
                                             if (Controller.getNotificacion(
                                                         index)
                                                     .tipo ==
-                                                2)
+                                                0)
                                               Text(
                                                 'Tarjeta',
                                                 style: GoogleFonts.inter(
